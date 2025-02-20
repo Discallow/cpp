@@ -1,31 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Harl.hpp                                           :+:      :+:    :+:   */
+/*   Point.hpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: discallow <discallow@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/11 07:53:30 by discallow         #+#    #+#             */
-/*   Updated: 2025/02/11 10:59:28 by discallow        ###   ########.fr       */
+/*   Created: 2025/02/15 05:38:58 by discallow         #+#    #+#             */
+/*   Updated: 2025/02/19 16:02:23 by discallow        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef HARL_HPP
-# define HARL_HPP
+#ifndef POINT_HPP
+# define POINT_HPP
 
-# include <iostream>
-# include <string>
+# include "Fixed.hpp"
 
-class Harl
+class	Point
 {
-private:
-	void	_debug(void);
-	void	_info(void);
-	void	_warning(void);
-	void	_error(void);
-	void	_notFound(void);
-public:
-	void	complain(std::string level);
+	private:
+		const Fixed	_x;
+		const Fixed	_y;
+	public:
+		Point(void);
+		~Point(void);
+		Point(float x, float y);
+		Point(const Point &other);
+		Point&	operator=(const Point &other);
 };
 
 #endif

@@ -1,31 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Harl.hpp                                           :+:      :+:    :+:   */
+/*   Point.cpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: discallow <discallow@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/11 07:53:30 by discallow         #+#    #+#             */
-/*   Updated: 2025/02/11 10:59:28 by discallow        ###   ########.fr       */
+/*   Created: 2025/02/15 05:45:58 by discallow         #+#    #+#             */
+/*   Updated: 2025/02/19 16:11:19 by discallow        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef HARL_HPP
-# define HARL_HPP
+#include "Point.hpp"
 
-# include <iostream>
-# include <string>
+Point::Point(void): _x(0), _y(0) {
+	
+}
 
-class Harl
-{
-private:
-	void	_debug(void);
-	void	_info(void);
-	void	_warning(void);
-	void	_error(void);
-	void	_notFound(void);
-public:
-	void	complain(std::string level);
-};
+Point::~Point(void) {
+	
+}
 
-#endif
+Point::Point(float x, float y): _x(x), _y(y) {
+	
+}
+
+Point::Point(const Point &other): _x(other._x), _y(other._y) {
+	
+}
+
+Point& Point::operator=(const Point& other) {
+	std::cout << "Assignment is not allowed!" << std::endl;
+	return (*this);
+}
