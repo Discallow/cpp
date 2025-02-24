@@ -6,7 +6,7 @@
 /*   By: discallow <discallow@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 14:52:46 by discallow         #+#    #+#             */
-/*   Updated: 2025/02/06 19:04:49 by discallow        ###   ########.fr       */
+/*   Updated: 2025/02/20 21:38:46 by discallow        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,10 @@ Contact Phonebook::getContact(size_t _index) const {
 Contact &Phonebook::setContactIndex(void){
 	size_t	i = this->_index;
 	this->_index++;
-	if (this->_index <= CAPACITY)
-		this->_savedContacts++;
+	if (_savedContacts < CAPACITY)
+		_savedContacts++;
 	if (this->_index == CAPACITY){
-		this->_index = 0;		
+		this->_index = 0;
 	}
 	return (this->_contacts[i]);
 }

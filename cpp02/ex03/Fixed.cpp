@@ -6,33 +6,28 @@
 /*   By: discallow <discallow@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 03:51:36 by discallow         #+#    #+#             */
-/*   Updated: 2025/02/19 16:25:09 by discallow        ###   ########.fr       */
+/*   Updated: 2025/02/21 02:22:45 by discallow        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Fixed.hpp"
 
 Fixed::Fixed(void): _fixedPointNum(0) {
-	std::cout << "Default constructor called" << std::endl;
 }
 
 Fixed::~Fixed(void) {
-	std::cout << "Destructor called" << std::endl;
 }
 
 Fixed::Fixed(const Fixed& other) {
-	std::cout << "Copy constructor called" << std::endl;
 	this->_fixedPointNum = other._fixedPointNum;
 }
 
 Fixed::Fixed(const int n) {
 	_fixedPointNum = n << _fracBits;
-	std::cout << "Int constructor called" << std::endl;
 }
 
 Fixed::Fixed(const float n) {
 	_fixedPointNum = roundf(n * (1 << _fracBits));
-	std::cout << "Float constructor called" << std::endl;
 }
 
 float	Fixed::toFloat(void) const {
@@ -44,7 +39,6 @@ int		Fixed::toInt(void) const {
 }
 
 Fixed &Fixed::operator=(const Fixed& other) {
-	std::cout << "Copy assignment operator called" << std::endl;
 	if (this != &other) {
 		this->_fixedPointNum = other._fixedPointNum;
 	}
@@ -57,7 +51,6 @@ std::ostream &operator<<(std::ostream& out, const Fixed& fixed) {
 }
 
 int Fixed::getRawBits(void) const {
-	std::cout << "getRawBits member function called" << std::endl;
 	return (this->_fixedPointNum);
 }
 

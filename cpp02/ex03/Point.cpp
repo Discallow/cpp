@@ -6,7 +6,7 @@
 /*   By: discallow <discallow@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 05:45:58 by discallow         #+#    #+#             */
-/*   Updated: 2025/02/19 16:11:19 by discallow        ###   ########.fr       */
+/*   Updated: 2025/02/21 02:21:48 by discallow        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,15 @@ Point::Point(const Point &other): _x(other._x), _y(other._y) {
 }
 
 Point& Point::operator=(const Point& other) {
-	std::cout << "Assignment is not allowed!" << std::endl;
+	if (this != &other)
+		std::cout << "Assignment is not allowed!" << std::endl;
 	return (*this);
+}
+
+Fixed	Point::getX(void) const {
+	return (_x.toFloat());
+}
+
+Fixed	Point::getY(void) const {
+	return (_y.toFloat());
 }

@@ -6,7 +6,7 @@
 /*   By: discallow <discallow@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 14:52:34 by discallow         #+#    #+#             */
-/*   Updated: 2025/02/07 17:11:11 by discallow        ###   ########.fr       */
+/*   Updated: 2025/02/20 21:40:02 by discallow        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,6 @@ static void	showSavedContacts(Phonebook *phonebook) {
 	size_t		savedContacts;
 
 	savedContacts = phonebook->getSavedContacts();
-	
 	for (size_t i = 0; i < savedContacts; i++){
 		contact = phonebook->getContact(i);
 		std::cout << "|" << std::setw(10) << i << "|";
