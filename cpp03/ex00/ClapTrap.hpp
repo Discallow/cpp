@@ -6,7 +6,7 @@
 /*   By: discallow <discallow@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 18:16:49 by discallow         #+#    #+#             */
-/*   Updated: 2025/02/24 00:53:37 by discallow        ###   ########.fr       */
+/*   Updated: 2025/02/24 01:14:08 by discallow        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,8 @@ public:
 	ClapTrap(void);
 	~ClapTrap();
 	ClapTrap(const std::string& name);
-	ClapTrap(const ClapTrap& other);
 	ClapTrap& operator=(const ClapTrap &other);
+	ClapTrap(const ClapTrap& other);
 	void		attack(const std::string &target);
 	void		takeDamage(unsigned int amount);
 	void		beRepaired(unsigned int amount);
