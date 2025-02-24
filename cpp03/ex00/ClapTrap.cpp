@@ -6,7 +6,7 @@
 /*   By: discallow <discallow@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 18:41:58 by discallow         #+#    #+#             */
-/*   Updated: 2025/02/24 00:43:39 by discallow        ###   ########.fr       */
+/*   Updated: 2025/02/24 00:58:27 by discallow        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ ClapTrap::~ClapTrap(void) {
 	std::cout << BLUE << "Default destructor called!" << RESET << std::endl;	
 }
 
-ClapTrap::ClapTrap(std::string& name): _name(name) {
+ClapTrap::ClapTrap(const std::string& name): _name(name), _hitPoints(10), _energyPoints(10), _attackDamage(0) {
 	std::cout << CYAN << "Constructor called!" << RESET << std::endl;
 }
 
@@ -50,15 +50,17 @@ void	ClapTrap::attack(const std::string& target) {
 
 void	ClapTrap::takeDamage(unsigned int amount) {
 	if (_hitPoints) {
+		if (amount > _hitPoints)
+			amount = _hitPoints;
 		std::cout << _name << " took " << RED << amount << RESET << "of damage!" << std::endl;
-		_hitPoints--;
+		_hitPoints -= amount;
 	}
 }
 
 void	ClapTrap::beRepaired(unsigned int amount) {
 	if (_energyPoints && _hitPoints) {
 		std::cout << _name << " repaired " << RED << amount << RESET
-			" hit points back!" << std::endl;
+			<< " hit points back!" << std::endl;
 		_energyPoints--;
 		_hitPoints += amount;
 	}
