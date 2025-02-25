@@ -6,14 +6,14 @@
 /*   By: discallow <discallow@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 01:10:44 by discallow         #+#    #+#             */
-/*   Updated: 2025/02/25 20:00:58 by discallow        ###   ########.fr       */
+/*   Updated: 2025/02/25 21:09:20 by discallow        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ScavTrap.hpp"
 
 int main(void) {
-    std::cout << "Testing ClapTrap:" << std::endl;
+	std::cout << "Testing ClapTrap:" << std::endl;
 	ClapTrap	clap0;
 	ClapTrap	clap1("Clap1");
 
