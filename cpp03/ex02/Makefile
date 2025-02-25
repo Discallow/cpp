@@ -1,5 +1,5 @@
-NAME = scavtrap
-SRC = main.cpp ClapTrap.hpp ClapTrap.cpp ScavTrap.hpp ScavTrap.cpp
+NAME = fragtrap
+SRC = main.cpp ClapTrap.hpp ClapTrap.cpp ScavTrap.hpp ScavTrap.cpp FragTrap.cpp FragTrap.hpp
 CXX = c++ 
 CXXFLAGS = -Wall -Wextra -Werror -std=c++98
 
