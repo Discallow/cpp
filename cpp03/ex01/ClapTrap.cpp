@@ -6,7 +6,7 @@
 /*   By: discallow <discallow@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 18:41:58 by discallow         #+#    #+#             */
-/*   Updated: 2025/02/25 00:55:59 by discallow        ###   ########.fr       */
+/*   Updated: 2025/02/25 00:55:46 by discallow        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,12 @@ ClapTrap::~ClapTrap(void) {
 }
 
 ClapTrap::ClapTrap(const std::string& name): _name(name), _hitPoints(10), _energyPoints(10), _attackDamage(0) {
-	std::cout << CYAN << "ClapTrap " << _name << " Constructor called!" << RESET << std::endl;
+	std::cout << CYAN << "ClapTrap " << _name << " constructor called!" << RESET << std::endl;
 }
 
-ClapTrap::ClapTrap(const ClapTrap& other): other._name(other._name), _hitPoints(other._hitPoints), 
+ClapTrap::ClapTrap(const ClapTrap& other): _name(other._name), _hitPoints(other._hitPoints), 
 	_energyPoints(other._energyPoints), _attackDamage(other._attackDamage){
-		std::cout << YELLOW << "ClapTrap " << _name << " copy constructor called!" << RESET << std::endl;
+	std::cout << YELLOW << "ClapTrap " << other._name << " copy constructor called!" << RESET << std::endl;
 }
 
 ClapTrap& ClapTrap::operator=(const ClapTrap &other) {
