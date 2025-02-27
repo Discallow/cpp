@@ -1,5 +1,5 @@
 NAME = claptrap
-SRC = main.cpp ClapTrap.hpp ClapTrap.cpp
+SRC = main.cpp ClapTrap.cpp
 CXX = c++ 
 CXXFLAGS = -Wall -Wextra -Werror -std=c++98
 

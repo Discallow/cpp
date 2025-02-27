@@ -6,7 +6,7 @@
 /*   By: discallow <discallow@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 04:19:57 by discallow         #+#    #+#             */
-/*   Updated: 2025/02/25 01:27:25 by discallow        ###   ########.fr       */
+/*   Updated: 2025/02/26 18:26:26 by discallow        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,10 @@ ScavTrap::ScavTrap(const ScavTrap& other): ClapTrap(other) {
 }
 
 void ScavTrap::guardGate() {
-	if (_hitPoints)
+	if (_hitPoints && _energyPoints)
 		std::cout << GRAY << "ScavTrap " << _name << " is now in Gate Keeper mode!" << RESET << std::endl;
+	else if (!_energyPoints)
+		std::cout << "ScavTrap " << _name << " doesn't have any energy available!" << std::endl;
 	else
 		std::cout << RED << "ScavTrap " << _name << " is already dead!" << RESET << std::endl;	
 }

@@ -1,5 +1,5 @@
-NAME = fragtrap
-SRC = main.cpp ClapTrap.cpp ScavTrap.cpp FragTrap.cpp 
+NAME = diamondtrap
+SRC = main.cpp ClapTrap.cpp ScavTrap.cpp FragTrap.cpp DiamondTrap.cpp
 CXX = c++ 
 CXXFLAGS = -Wall -Wextra -Werror -std=c++98
 
