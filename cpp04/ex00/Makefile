@@ -1,5 +1,5 @@
-NAME = scavtrap
-SRC = main.cpp ClapTrap.cpp ScavTrap.cpp
+NAME = animal
+SRC = main.cpp Animal.cpp Cat.cpp Dog.cpp WrongAnimal.cpp WrongCat.cpp
 CXX = c++ 
 CXXFLAGS = -Wall -Wextra -Werror -std=c++98
 
