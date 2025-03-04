@@ -1,7 +1,7 @@
 NAME = account
 SRC = tests.cpp Account.cpp
 CXX = c++
-CXXFLAGS = -Wall -Wextra -Werror -std=c++98 -I./
+CXXFLAGS = -Wall -Wextra -Werror -std=c++98
 OBJS = $(SRC:%.cpp=%.o)
 
 all: $(NAME)

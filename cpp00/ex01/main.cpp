@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <Phonebook.hpp>
+#include "Phonebook.hpp"
 
 static void	selectSpecificContact(Phonebook *phonebook) {
 	std::string	input;
@@ -21,6 +21,8 @@ static void	selectSpecificContact(Phonebook *phonebook) {
 	std::cout << YELLOW << "Select one contact to get all the details:" << RESET;
 	std::getline(std::cin, input);
 	if (input.length() != 1 || input.at(0) < '0' || input.at(0) > '7') {
+		if (std::cin.eof())
+				return ;
 		std::cout << RED << "Invalid contact" << RESET << std::endl;
 		return ;
 	}
@@ -81,6 +83,8 @@ static void	searchContact(Phonebook *phonebook) {
 	<< "|" << std::endl;
 	showSavedContacts(phonebook);
 	selectSpecificContact(phonebook);
+	if (std::cin.eof())
+		return ;
 	sleep (2);
 }
 
@@ -110,6 +114,8 @@ int	main(void){
 			searchContact(&phonebook);
 		else if (input == "EXIT")
 			break ;
+		if (std::cin.eof())
+			return (0);
 		sleep(1);
 	}
 	return (0);
