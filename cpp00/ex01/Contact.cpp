@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <Contact.hpp>
+#include "Contact.hpp"
 
 std::string	&Contact::setContactInfo(size_t type) {
 	switch (type)
