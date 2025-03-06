@@ -6,7 +6,7 @@
 /*   By: discallow <discallow@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 18:16:57 by discallow         #+#    #+#             */
-/*   Updated: 2025/03/01 16:30:47 by discallow        ###   ########.fr       */
+/*   Updated: 2025/03/05 20:11:15 by discallow        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,8 @@ class Animal {
 		virtual void 	makeSound(void) const;
 		std::string		getType(void) const;
 		void			setType(const std::string& name);
+		virtual void	setIdea(std::string idea, size_t index);
+		virtual void	showIdeas(void) const;
 };
 
 

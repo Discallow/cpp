@@ -6,7 +6,7 @@
 /*   By: discallow <discallow@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 18:31:57 by discallow         #+#    #+#             */
-/*   Updated: 2025/03/01 16:30:42 by discallow        ###   ########.fr       */
+/*   Updated: 2025/03/05 20:11:22 by discallow        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,4 +42,13 @@ void	Animal::setType(const std::string& name) {
 
 void	Animal::makeSound(void) const {
 	std::cout << "Grrrrr..." << std::endl;
+}
+
+void	Animal::setIdea(std::string idea, size_t index) {
+	(void)idea;
+	(void)index;
+}
+
+void	Animal::showIdeas(void) const {
+	
 }

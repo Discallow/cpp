@@ -1,4 +1,4 @@
-NAME = animal
+NAME = brain
 SRC = main.cpp Animal.cpp Cat.cpp Dog.cpp Brain.cpp
 CXX = c++ 
 CXXFLAGS = -Wall -Wextra -Werror -std=c++98
