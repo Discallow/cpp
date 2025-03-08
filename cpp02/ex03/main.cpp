@@ -6,7 +6,7 @@
 /*   By: discallow <discallow@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 21:58:30 by discallow         #+#    #+#             */
-/*   Updated: 2025/02/24 01:49:47 by discallow        ###   ########.fr       */
+/*   Updated: 2025/03/08 15:10:34 by discallow        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@ void testPoint(const Point& A, const Point& B, const Point& C, const Point& P) {
 			<< B.getX() << "," << B.getY() << "), ("
 			<< C.getX() << "," << C.getY() << ") | Testing P("
 			<< P.getX() << "," << P.getY() << "): ";
-
 	if (!isValidTriangle(A, B, C)) {
 		std::cout << "❌ Invalid Triangle\n";
 	} else if (isInsideTriangle(A, B, C, P)) {

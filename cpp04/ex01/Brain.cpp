@@ -6,7 +6,7 @@
 /*   By: discallow <discallow@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 18:31:57 by discallow         #+#    #+#             */
-/*   Updated: 2025/03/05 20:19:54 by discallow        ###   ########.fr       */
+/*   Updated: 2025/03/08 15:48:50 by discallow        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ Brain::Brain(void): _size(0) {
 }
 
 Brain::~Brain(void) {
-	std::cout << BLUE << "Brain destructor constructor called!" << RESET << std::endl;	
+	std::cout << BLUE << "Brain destructor called!" << RESET << std::endl;	
 }
 
 Brain::Brain(const Brain& other){
@@ -36,6 +36,22 @@ Brain&	Brain::operator=(const Brain& other) {
 }
 
 void	Brain::setIdea(std::string idea, size_t index) {
-	_ideas[index] = idea;
-	_size++;
+	if (index < 100) {
+		if (_ideas[index].empty())
+			this->_size++;
+		_ideas[index] = idea;
+	}
+}
+
+size_t	Brain::getSize(void) const {
+	size_t count = 0;
+	for (size_t i = 0; i < 100; i++) {
+		if (!_ideas[i].empty())
+			count++;
+    }
+	return (count);
+}
+
+std::string	Brain::getIdea(size_t index) const {
+	return (_ideas[index]);
 }
