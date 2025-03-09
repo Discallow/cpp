@@ -1,5 +1,5 @@
 NAME = abstractBrain
-SRC = main.cpp Animal.cpp Cat.cpp Dog.cpp Brain.cpp
+SRC = main.cpp AMateria.cpp Ice.cpp Cure.cpp Character.cpp
 CXX = c++ 
 CXXFLAGS = -Wall -Wextra -Werror -std=c++98
 

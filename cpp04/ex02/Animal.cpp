@@ -6,7 +6,7 @@
 /*   By: discallow <discallow@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 18:31:57 by discallow         #+#    #+#             */
-/*   Updated: 2025/03/08 16:01:27 by discallow        ###   ########.fr       */
+/*   Updated: 2025/03/08 23:09:52 by discallow        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ Animal::~Animal(void) {
 }
 
 Animal::Animal(const Animal& other): _type(other._type) {
+	
 	std::cout << YELLOW << "Animal copy constructor called!" << RESET << std::endl;
 }
 
