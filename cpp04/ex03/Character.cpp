@@ -6,30 +6,41 @@
 /*   By: discallow <discallow@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 14:42:45 by discallow         #+#    #+#             */
-/*   Updated: 2025/03/09 18:04:01 by discallow        ###   ########.fr       */
+/*   Updated: 2025/03/10 10:28:15 by discallow        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Character.hpp"
 
-Character::Character(void): _storedMateria(NULL), _unnequipLen(0){
+Character::Character(void) {
+	_storedMateria = NULL;
+	_unnequipLen = 0;
+	_equipLen = 0;
 	for (int i = 0; i < 4; i++)
 		_inv[i] = NULL;
 }
 
 Character::~Character() {
     for (int i = 0; i < _unnequipLen; i++) {
-        delete _storedMateria[i];  // Free all stored Materia
+        delete _storedMateria[i];
     }
-    delete[] _storedMateria;  // Free the array itself
+	//for (int i = 0; i < _equipLen; i++)
+    delete[] _storedMateria;
 }
 
-Character::Character(std::string& name): _name(name), _storedMateria(NULL), _unnequipLen(0) {
+Character::Character(std::string name) {
+	this->_name = name;
+	_storedMateria = NULL;
+	_unnequipLen = 0;
 	for (int i = 0; i < 4; i++)
 		_inv[i] = NULL;
 }
 
-Character::Character(const Character& other): _name(other._name), _storedMateria(NULL), _unnequipLen(0) {
+Character::Character(const Character& other) {
+	this->_name = other._name;
+	_storedMateria = NULL;
+	_unnequipLen = 0;
+	_equipLen = 0;
 	for (int i = 0; i < 4; i++) {
 		if (other._inv[i])
 			this->_inv[i] = other._inv[i]->clone();
@@ -43,6 +54,7 @@ Character& Character::operator=(const Character& other) {
 		this->_name = other._name;
 		this->_storedMateria = other._storedMateria;
 		this->_unnequipLen = other._unnequipLen;
+		this->_equipLen = other._equipLen;
 		for (int i = 0; i < 4; i++) {
 			if (other._inv[i])
 				this->_inv[i] = other._inv[i]->clone();
@@ -67,7 +79,7 @@ void	Character::equip(AMateria* m) {
 		_inv[i] = m;
 		for (int i = 0; i < _unnequipLen; i++)
 			if (_storedMateria[i] == m) {
-				_storedMateria[i] = nullptr;
+				_storedMateria[i] = NULL;
 				break ;
 			}
 	}
@@ -86,7 +98,7 @@ void Character::unequip(int idx) {
 	delete[] _storedMateria;
 	_storedMateria = newStorage;
 	_unnequipLen++;
-	_inv[idx] = nullptr;
+	_inv[idx] = NULL;
 }
 
 

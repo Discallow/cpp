@@ -6,7 +6,7 @@
 /*   By: discallow <discallow@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 23:52:24 by discallow         #+#    #+#             */
-/*   Updated: 2025/03/09 18:13:18 by discallow        ###   ########.fr       */
+/*   Updated: 2025/03/10 10:18:29 by discallow        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,12 @@ class Character: public ICharacter {
 		AMateria**	_storedMateria;
 		std::string	_name;
 		int			_unnequipLen;
+		int			_equipLen;
 	public:
 		Character(void);
 		~Character(void);
 		Character(const Character& other);
-		Character(std::string& name);
+		Character(std::string name);
 		Character& operator=(const Character& other);
 		std::string const&	getName() const;
 		void				equip(AMateria* m);
