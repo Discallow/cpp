@@ -6,7 +6,7 @@
 /*   By: discallow <discallow@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 14:42:45 by discallow         #+#    #+#             */
-/*   Updated: 2025/03/10 10:28:15 by discallow        ###   ########.fr       */
+/*   Updated: 2025/03/11 14:18:56 by discallow        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,12 @@ Character::Character(void) {
 }
 
 Character::~Character() {
-    for (int i = 0; i < _unnequipLen; i++) {
-        delete _storedMateria[i];
-    }
-	//for (int i = 0; i < _equipLen; i++)
-    delete[] _storedMateria;
+	for (int i = 0; i < _unnequipLen; i++) {
+		delete _storedMateria[i];
+	}
+	for (int i = 0; i < 4; i++)
+		delete _inv[i];
+	delete[] _storedMateria;
 }
 
 Character::Character(std::string name) {
@@ -56,8 +57,11 @@ Character& Character::operator=(const Character& other) {
 		this->_unnequipLen = other._unnequipLen;
 		this->_equipLen = other._equipLen;
 		for (int i = 0; i < 4; i++) {
-			if (other._inv[i])
-				this->_inv[i] = other._inv[i]->clone();
+			if (other._inv[i]) {
+				delete _inv[i];
+				this->_inv[i] = other._inv[i]->clone();				
+			}
+
 			else
 				this->_inv[i] = NULL;
 		}

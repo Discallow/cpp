@@ -1,5 +1,5 @@
-NAME = abstractBrain
-SRC = main.cpp AMateria.cpp Ice.cpp Cure.cpp Character.cpp
+NAME = materia
+SRC = main.cpp AMateria.cpp Ice.cpp Cure.cpp Character.cpp MateriaSource.cpp
 CXX = c++ 
 CXXFLAGS = -Wall -Wextra -Werror -std=c++98
 

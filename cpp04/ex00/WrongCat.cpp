@@ -6,7 +6,7 @@
 /*   By: discallow <discallow@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 18:31:57 by discallow         #+#    #+#             */
-/*   Updated: 2025/03/08 15:53:15 by discallow        ###   ########.fr       */
+/*   Updated: 2025/03/12 11:46:09 by discallow        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,5 +34,5 @@ WrongCat&	WrongCat::operator=(const WrongCat& other) {
 }
 
 void	WrongCat::makeSound(void) const {
-	std::cout << "Meow meow" << std::endl;
+	std::cout << "Wrong Meow meow" << std::endl;
 }

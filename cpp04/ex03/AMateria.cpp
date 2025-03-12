@@ -6,7 +6,7 @@
 /*   By: discallow <discallow@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 23:03:47 by discallow         #+#    #+#             */
-/*   Updated: 2025/03/09 18:06:48 by discallow        ###   ########.fr       */
+/*   Updated: 2025/03/11 09:39:41 by discallow        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,4 +37,8 @@ AMateria& AMateria::operator=(const AMateria& other) {
 
 void	AMateria::use(ICharacter& target) {
 	(void)target;
+}
+
+std::string	const& AMateria::getType(void) const {
+	return (_type);
 }

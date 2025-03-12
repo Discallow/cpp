@@ -6,7 +6,7 @@
 /*   By: discallow <discallow@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 18:31:57 by discallow         #+#    #+#             */
-/*   Updated: 2025/03/08 15:52:44 by discallow        ###   ########.fr       */
+/*   Updated: 2025/03/12 11:45:59 by discallow        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,5 +41,5 @@ void	WrongAnimal::setType(const std::string& name) {
 }
 
 void	WrongAnimal::makeSound(void) const {
-	std::cout << "??????" << std::endl;
+	std::cout << "Unknown sound by Wrong Animal" << std::endl;
 }
