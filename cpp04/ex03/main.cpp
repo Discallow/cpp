@@ -6,7 +6,7 @@
 /*   By: discallow <discallow@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 13:48:40 by arabelo-          #+#    #+#             */
-/*   Updated: 2025/03/12 11:53:34 by discallow        ###   ########.fr       */
+/*   Updated: 2025/03/14 15:05:36 by discallow        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,21 +18,27 @@
 void    testMateriaSource(void) {
     std::cout << "\n===== TESTING MATERIA SOURCE =====\n";
     IMateriaSource* src = new MateriaSource();
+    AMateria*   ice = new Ice();
+    AMateria*   cure = new Cure();
+    AMateria*   ice2 = new Ice();
     std::cout << "Learning Ice Materia...\n";
-    src->learnMateria(new Ice());
+    src->learnMateria(ice);
 
     std::cout << "Learning Cure Materia...\n";
-    src->learnMateria(new Cure());
+    src->learnMateria(cure);
 
     std::cout << "Trying to create an unknown Materia (\"fire\")...\n";
     AMateria* tmp = src->createMateria("fire");
     if (!tmp)
         std::cout << "Fire Materia not found, as expected.\n";
     std::cout << "Trying to learn more than 4 Materias...\n";
-    src->learnMateria(new Ice());
-    src->learnMateria(new Cure());
-    src->learnMateria(new Ice());
+    src->learnMateria(ice);
+    src->learnMateria(cure);
+    src->learnMateria(ice2);
 
+    delete ice;
+    delete cure;
+    delete ice2;
     delete src;
 }
 
@@ -40,8 +46,10 @@ void    testCharacterUsage(void) {
     std::cout << "\n===== TESTING CHARACTER USAGE =====\n";
 
     IMateriaSource* src = new MateriaSource();
-    src->learnMateria(new Ice());
-    src->learnMateria(new Cure());
+    AMateria*   ice = new Ice();
+    AMateria*   cure = new Cure();
+    src->learnMateria(ice);
+    src->learnMateria(cure);
 
     ICharacter* me = new Character("me");
 
@@ -63,7 +71,9 @@ void    testCharacterUsage(void) {
 
     std::cout << "Trying to use an unequipped slot...\n";
     me->use(0, *bob);
-
+    
+    delete ice;
+    delete cure;
     delete bob;
     delete me;
     delete src;

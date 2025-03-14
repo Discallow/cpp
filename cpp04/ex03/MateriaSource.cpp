@@ -6,7 +6,7 @@
 /*   By: discallow <discallow@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 09:17:26 by discallow         #+#    #+#             */
-/*   Updated: 2025/03/11 14:13:48 by discallow        ###   ########.fr       */
+/*   Updated: 2025/03/14 15:05:14 by discallow        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,12 @@ MateriaSource::MateriaSource(void) {
 }
 
 MateriaSource::~MateriaSource(void) {
-	for (int i = 0; i < 4; i++)
-		delete _storedMateria[i];	
+	for (int i = 0; i < 4; i++) {
+		if (_storedMateria[i]) {
+			delete _storedMateria[i];	
+			_storedMateria[i] = NULL;			
+		}
+	}
 }
 
 MateriaSource::MateriaSource(const MateriaSource& other) {
@@ -50,11 +54,9 @@ void MateriaSource::learnMateria(AMateria* m) {
 	while (i < 4 && _storedMateria[i])
 		i++;
 	if (i < 4)
-		_storedMateria[i] = m;
-	else {
-		delete m;
-		std::cout << "The inventory is full, you can't learn more materia!" << std::endl;		
-	}
+		_storedMateria[i] = m->clone();
+	else
+		std::cout << "The inventory is full, you can't learn more materia!" << std::endl;
 
 }
 

@@ -6,7 +6,7 @@
 /*   By: discallow <discallow@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 14:42:45 by discallow         #+#    #+#             */
-/*   Updated: 2025/03/11 14:18:56 by discallow        ###   ########.fr       */
+/*   Updated: 2025/03/14 15:03:22 by discallow        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,9 @@ Character::Character(std::string name) {
 
 Character::Character(const Character& other) {
 	this->_name = other._name;
-	_storedMateria = NULL;
-	_unnequipLen = 0;
-	_equipLen = 0;
+	_storedMateria = other._storedMateria;
+	_unnequipLen = other._unnequipLen;
+	_equipLen = other._equipLen;
 	for (int i = 0; i < 4; i++) {
 		if (other._inv[i])
 			this->_inv[i] = other._inv[i]->clone();
@@ -61,7 +61,6 @@ Character& Character::operator=(const Character& other) {
 				delete _inv[i];
 				this->_inv[i] = other._inv[i]->clone();				
 			}
-
 			else
 				this->_inv[i] = NULL;
 		}

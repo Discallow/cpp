@@ -6,11 +6,11 @@
 /*   By: discallow <discallow@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 18:16:57 by discallow         #+#    #+#             */
-/*   Updated: 2025/03/01 16:31:07 by discallow        ###   ########.fr       */
+/*   Updated: 2025/03/14 15:05:59 by discallow        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef WRONGANIMAL_HPP_HPP
+#ifndef WRONGANIMAL_HPP
 # define WRONGANIMAL_HPP
 
 # include <iostream>
