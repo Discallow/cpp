@@ -6,7 +6,7 @@
 /*   By: discallow <discallow@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/15 05:35:32 by discallow         #+#    #+#             */
-/*   Updated: 2025/03/17 18:42:36 by discallow        ###   ########.fr       */
+/*   Updated: 2025/03/18 00:25:45 by discallow        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,7 @@ Bureaucrat::Bureaucrat(const std::string& name, int grade): _name(name) {
 		throw GradeTooHighException();
 	else if (grade > 150)
 		throw GradeTooLowException();
-	else
-		this->_grade = grade;
+	this->_grade = grade;
 }
 
 Bureaucrat::~Bureaucrat(void) {
@@ -68,16 +67,25 @@ const char* Bureaucrat::GradeTooLowException::what() const throw() {
 	return ("Grade is too low!");
 }
 
-void	Bureaucrat::signForm(Form& f) {
+void	Bureaucrat::signForm(AForm& f) {
 	try {
 		f.beSigned(*this);
-		std::cout << this->_name << " signed " << f.getName() << std::endl;
-	}
-	catch (Form::GradeTooLowException &error) {
-		std::cerr << this->_name << " couldn't sign " << f.getName() << " because " << error.what() << std::endl;
+		std::cout << GREEN << this->_name << " signed " << f.getName() << RESET << std::endl;
 	}
 	catch (const std::exception& error) {
-		std::cerr << "Generic std::exception caught: " << error.what() << std::endl;
+		std::cerr << RED << this->_name << " couldn't sign " << f.getName() << " because: " 
+			<< error.what() << RESET << std::endl;
+	}
+}
+
+void	Bureaucrat::executeForm(AForm const& form) {
+	try {
+		form.execute(*this);
+		std::cout << GREEN << this->_name << " executed " << form.getName() << RESET << std::endl;
+	}
+	catch (const std::exception &error) {
+		std::cerr << RED << this->_name << " couldn't execute " << form.getName() << " because: " 
+			<< error.what() << RESET << std::endl;
 	}
 }
 

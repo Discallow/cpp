@@ -1,83 +1,87 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Form.cpp                                           :+:      :+:    :+:   */
+/*   AForm.cpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: discallow <discallow@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 03:10:59 by discallow         #+#    #+#             */
-/*   Updated: 2025/03/17 04:56:33 by discallow        ###   ########.fr       */
+/*   Updated: 2025/03/18 00:25:01 by discallow        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Form.hpp"
+#include "AForm.hpp"
 
-Form::Form(void): _name("unknown"), _isSigned(false), _gradeToSign(150), _gradeToExec(150) {
+AForm::AForm(void): _name("unknown"), _isSigned(false), _gradeToSign(150), _gradeToExec(150) {
 	
 }
 
-Form::Form(const std::string name, int gradeToSign, int gradeToExec): _name(name)
+AForm::AForm(const std::string name, int gradeToSign, int gradeToExec): _name(name)
 , _isSigned(false), _gradeToSign(gradeToSign), _gradeToExec(gradeToExec) {
 	if (_gradeToSign > 150 || _gradeToExec > 150)
-		throw Form::GradeTooLowException();
+		throw AForm::GradeTooLowException();
 	else if (_gradeToSign < 1 || _gradeToExec < 1)
-		throw Form::GradeTooHighException();
+		throw AForm::GradeTooHighException();
 }
 
-Form::Form(const Form& other):_name(other._name), _isSigned(other._isSigned), 
+AForm::AForm(const AForm& other):_name(other._name), _isSigned(other._isSigned), 
 	_gradeToSign(other._gradeToSign), _gradeToExec(other._gradeToExec) {
 	
 }
 
-Form&	Form::operator=(const Form& other) {
+AForm&	AForm::operator=(const AForm& other) {
 	if (this != &other) {
 		_isSigned = other._isSigned;
 	}
 	return (*this);
 }
 
-Form::~Form(void) {
+AForm::~AForm(void) {
 
 }
 
-const char* Form::GradeTooHighException::what(void) const throw() {
+const char* AForm::GradeTooHighException::what(void) const throw() {
 	return ("Grade too high!");
 }
 
-const char* Form::GradeTooLowException::what(void) const throw() {
+const char* AForm::GradeTooLowException::what(void) const throw() {
 	return ("Grade too low!");
 }
 
-const char* Form::FormAlreadySigned::what(void) const throw() {
+const char* AForm::FormAlreadySigned::what(void) const throw() {
 	return ("Form was already signed!");
 }
 
-void	Form::beSigned(Bureaucrat& b) {
+const char* AForm::FormNotSigned::what(void) const throw() {
+	return ("Form isn't signed!");
+}
+
+void	AForm::beSigned(Bureaucrat& b) {
 	if (!_isSigned && b.getGrade() <= _gradeToSign)
 		_isSigned = true;
 	else if (_isSigned)
-		throw Form::FormAlreadySigned();
+		throw AForm::FormAlreadySigned();
 	else
-		throw Form::GradeTooLowException();
+		throw AForm::GradeTooLowException();
 }
 
-std::string	Form::getName() const {
+std::string	AForm::getName() const {
 	return (_name);
 }
 
-bool	Form::getIsSigned() const {
+bool	AForm::getIsSigned() const {
 	return (_isSigned);
 }
 
-int	Form::getGradeToExec() const {
+int	AForm::getGradeToExec() const {
 	return (_gradeToExec);
 }
 
-int Form::getGradeToSign() const {
+int AForm::getGradeToSign() const {
 	return (_gradeToSign);
 }
 
-std::ostream& operator<<(std::ostream& os, Form& form) {
+std::ostream& operator<<(std::ostream& os, AForm& form) {
 	os << "Form name: " << form.getName() << std::endl;
 	os << "Form status: " << form.getIsSigned() << std::endl;
 	os << "Form grade to sign value: " << form.getGradeToSign() << std::endl;

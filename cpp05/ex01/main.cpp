@@ -6,7 +6,7 @@
 /*   By: discallow <discallow@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/15 06:11:00 by discallow         #+#    #+#             */
-/*   Updated: 2025/03/16 04:06:41 by discallow        ###   ########.fr       */
+/*   Updated: 2025/03/17 05:00:00 by discallow        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,5 +63,20 @@ int main(void) {
 	catch (const std::exception& e) {
 		std::cerr << "Test 4 Unexpected Exception: " << e.what() << std::endl;
 	}
+	try {
+		Bureaucrat highRank("HighRank", 5);
+		Form permit("Permit", 10, 20);
+
+		std::cout << "=== Test 5 ===" << std::endl;
+		highRank.signForm(permit);
+		highRank.signForm(permit);
+		std::cout << permit << std::endl;
+	}
+	catch (const Form::FormAlreadySigned& e) {
+		std::cerr << "Test 5 Form::FormAlreadySigned: " << e.what() << std::endl;
+	}
+	catch (const std::exception& e) {
+		std::cerr << "Test 1 Unexpected Exception: " << e.what() << std::endl;
+    }
     return (0);
 }
