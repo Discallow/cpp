@@ -6,7 +6,7 @@
 /*   By: discallow <discallow@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 19:49:14 by discallow         #+#    #+#             */
-/*   Updated: 2025/03/23 01:52:22 by discallow        ###   ########.fr       */
+/*   Updated: 2025/03/31 11:06:37 by discallow        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 
 # include <iostream>
 # include <string>
-# include <exception>
 # include <cctype>
 # include <climits>
 # include <cstdlib>
