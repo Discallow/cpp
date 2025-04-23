@@ -2,15 +2,17 @@ NAME = Span
 SRC = main.cpp Span.cpp
 CXX = c++ 
 CXXFLAGS = -Wall -Wextra -Werror -std=c++98
+OBJ = $(SRC:.cpp=.o)
 
 all : $(NAME)
 
-$(NAME): $(SRC)
-	$(CXX) $(CXXFLAGS) $(SRC) -o $(NAME)
+$(NAME): $(OBJ)
+	$(CXX) $(CXXFLAGS) $(OBJ) -o $(NAME)
 
 clean:
-	rm -rf $(NAME)
-
+	rm -rf $(OBJ)
+	
 fclean: clean
+	rm -rf $(NAME)
 
 re: fclean all

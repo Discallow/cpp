@@ -1,5 +1,5 @@
-NAME = Array
-SRC = main.cpp 
+NAME = PmergeMe
+SRC = main.cpp RPN.cpp
 CXX = c++ 
 CXXFLAGS = -Wall -Wextra -Werror -std=c++98
 OBJ = $(SRC:.cpp=.o)
@@ -12,6 +12,7 @@ $(NAME): $(OBJ)
 clean:
 	rm -rf $(OBJ)
 	
+
 fclean: clean
 	rm -rf $(NAME)
 
