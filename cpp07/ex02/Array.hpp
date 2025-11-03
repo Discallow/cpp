@@ -18,18 +18,19 @@ class	Array {
 		};
 	public:
 		Array(): _array(NULL), _len(0) {}
-		~Array() { delete[] _array; }
+		~Array() { delete[] _array;}
 		Array(unsigned int n): _array(new T[n]), _len(n) {}
 		Array(const Array& other): _array(new T[other._len]), _len(other._len) {
-			for (int i = 0; i < _len; i++)
+			for (unsigned int i = 0; i < _len; i++)
 				_array[i] = other._array[i];
 		}
 		Array& operator=(const Array& other) {
 			if (this != &other) {
-				delete[] _array;
+				if (_array)
+					delete[] _array;
 				_len = other._len;
 				_array = new T[other._len];
-				for (int i = 0; i < _len; i++)
+				for (unsigned int i = 0; i < _len; i++)
 					_array[i] = other._array[i];
 			}
 			return (*this);

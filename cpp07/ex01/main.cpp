@@ -7,20 +7,21 @@ void	increment(T& value) {
 
 template<typename T>
 void	print(const T& info) {
-	std::cout << info << std::endl;
+	std::cout << CYAN << info << RESET << std::endl;
 }
 
 void	print2(int info) {
-	std::cout << info << std::endl;
+	std::cout << CYAN << info << RESET << std::endl;
 }
 
 int main(void) {
 	int arr_num[] = {1, 2, 3, 4, 5};
-	std::cout << "Before:\n\n";
-	iter(arr_num, 5, print<int>);
-	std::cout << "\n\nAfter:\n\n";
-	iter(arr_num, 5, increment<int>);
-	iter(arr_num, 5, print<int>);
-	std::cout << "Printing without explicitly mentioning type\n\n";
-	iter(arr_num, 5, print2);
+	size_t size = sizeof(arr_num) / sizeof(arr_num[0]);
+	std::cout << YELLOW << "Before:\n\n" << RESET;
+	iter(arr_num, size, print<int>); // the third parameter expands to void (*)(const int&)
+	std::cout << YELLOW << "\nAfter:\n\n" << RESET;
+	iter(arr_num, size, increment<int>); // the thir parameter expands to void (*)(int&)
+	iter(arr_num, size, print<int>); // the third parameter expands to void (*)(const int&)
+	std::cout << YELLOW << "\nPrinting without explicitly mentioning type\n\n" << RESET;
+	iter(arr_num, size, print2); // the third parameter expands to void (*)(int)
 }
