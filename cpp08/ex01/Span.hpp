@@ -36,10 +36,12 @@ class Span {
 			public:
 				const char* what() const throw();
 		};
-		void	addNumber(int num);
-		int		shortestSpan() const;
-		int		longestSpan() const;
-		void	addRange(std::vector<int>::iterator begin, std::vector<int>::iterator end);
+		void				addNumber(unsigned int num);
+		unsigned int		shortestSpan() const;
+		unsigned int		longestSpan() const;
+		void				addRange(std::vector<int>::iterator begin, std::vector<int>::iterator end);
+/* 		size_t				size() const;
+		const int&				operator[](size_t index) const; */
 
 };
 

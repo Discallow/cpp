@@ -46,5 +46,4 @@ int main() {
 		std::cout << RED << "Popped: " << mstack.top() << RESET << std::endl;
 		mstack.pop();
 	}
-    return (0);
 }

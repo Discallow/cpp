@@ -17,20 +17,20 @@ Span&	Span::operator=(const Span& other) {
 }
 
 const char* Span::WrongIndexException::what() const throw() {
-	return ("You can't add more numbers!\n");
+	return ("You can't add more numbers!");
 }
 
 const char* Span::NoSpanFound::what() const throw() {
-	return ("There aren't enough numbers to calculate the shortest/longest span!\n");
+	return ("There aren't enough numbers to calculate the shortest/longest span!");
 }
 
-void	Span::addNumber(int num) {
+void	Span::addNumber(unsigned int num) {
 	if (_v1.size() >= _len)
 		throw WrongIndexException();
 	_v1.push_back(num);
 }
 
-int	Span::shortestSpan() const {
+unsigned int	Span::shortestSpan() const {
 	if (_v1.size() < 2)
 		throw NoSpanFound();
 	std::vector<int> temp = _v1;
@@ -44,7 +44,7 @@ int	Span::shortestSpan() const {
 	return (minSpan);
 }
 
-int	Span::longestSpan() const {
+unsigned int	Span::longestSpan() const {
 	if (_v1.size() < 2)
 		throw NoSpanFound();
 	int min = *std::min_element(_v1.begin(), _v1.end());
@@ -58,3 +58,13 @@ void Span::addRange(std::vector<int>::iterator begin, std::vector<int>::iterator
 		throw WrongIndexException();
 	_v1.insert(_v1.end(), begin, end);
 }
+
+/* size_t	Span::size() const {
+	return (_len);
+}
+
+const int&	Span::operator[](size_t index) const {
+	if (index >= _len)
+		throw WrongIndexException();
+	return (_v1[index]);
+} */

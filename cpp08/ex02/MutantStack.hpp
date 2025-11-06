@@ -16,6 +16,8 @@
 # define GRAY	"\033[90m"
 # define RESET	"\033[0m"
 
+/* std::stack has no iterators because it's a container adaptor designed to enforce strict LIFO access, hiding all direct element access.
+By default, it uses std::deque as its underlying container. */
 template<typename T, typename Container = std::deque<T> >
 class	MutantStack: public std::stack<T, Container> {
 	public:
