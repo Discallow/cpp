@@ -2,53 +2,48 @@
 
 int comparisons = 0;
 
-PMergeMe::PMergeMe() {}
+template <typename Container>
+PMergeMe<Container>::PMergeMe(): _firstIndex(0), _secondIndex(0), _blockSize(0), _recursiveLevels(1), _boundaryIndex(0) {
 
-PMergeMe::PMergeMe(char *av): _firstIndex(0), _secondIndex(0), _recursiveLevels(1), _curIndex(0) {
-	parseInput(av);
+}
+
+template <typename Container>
+void	PMergeMe<Container>::setup() {
 	fordJohnson();
 	_recursiveLevels -= 1;
 	while (_recursiveLevels > 0) {
 		setMainAndPend();
-		std::cout << CYAN << "Main before: ";
-		for (size_t i = 0; i < _mainVec.size(); i++)
-			std::cout << _mainVec[i] << " ";
-		std::cout << RESET << std::endl;
-		std::cout << GRAY << "Pend before: ";
-		for (size_t i = 0; i < _pendVec.size(); i++)
-			std::cout << _pendVec[i] << " ";
-		std::cout << RESET << std::endl;
 		insertPendIntoMain();
+		_boundaryNumber.clear();
+		_fj.erase(_fj.begin(), _fj.begin() + _mainVec.size());
+		_fj.insert(_fj.begin(), _mainVec.begin(), _mainVec.end());
 		_recursiveLevels--;
-		std::cout << CYAN << "Main after: ";
-		for (size_t i = 0; i < _mainVec.size(); i++)
-			std::cout << _mainVec[i] << " ";
-		std::cout << RESET << std::endl;
-		std::cout << GRAY << "Pend after: ";
-		for (size_t i = 0; i < _pendVec.size(); i++)
-			std::cout << _pendVec[i] << " ";
-		std::cout << RESET << std::endl;
-		std::cout << "jacobVec[i]: ";
-		for (size_t i = 0; i < _jacobsthalVec.size(); i++)
-			std::cout << _jacobsthalVec[i] << " ";
-		std::cout << std::endl;
-		std::cout << "boundaries: ";
-		for (size_t i = 0; i < _matchingMainIndex.size(); i++)
-			std::cout << _matchingMainIndex[i] << " ";
-		std::cout << std::endl;
-		std::cout << "comparisons: " << comparisons << std::endl;
 		_mainVec.clear();
 		_pendVec.clear();
 	}
-	std::cout << GREEN << "After: [ ";
-	for (size_t i = 0; i < _fj.size(); i++)
-		std::cout << _fj[i] << " ";
-	std::cout << "]" << RESET << std::endl;
 }
 
-PMergeMe::~PMergeMe() {}
+template <typename Container>
+void	PMergeMe<Container>::printBefore() {
+	std::cout << GREEN << "Before: ";
+	for (size_t i = 0; i < _fj.size(); i++)
+		std::cout << _fj[i] << " ";
+	std::cout << RESET << std::endl;
+}
 
-void PMergeMe::parseInput(char *av) {
+template <typename Container>
+void	PMergeMe<Container>::printAfter() {
+	std::cout << GREEN << "After: ";
+	for (size_t i = 0; i < _fj.size(); i++)
+		std::cout << _fj[i] << " ";
+	std::cout << RESET << std::endl;
+}
+
+template <typename Container>
+PMergeMe<Container>::~PMergeMe() {}
+
+template <typename Container>
+void PMergeMe<Container>::parseInput(char *av) {
 	std::string			str;
 	std::stringstream	ss;
 	char				*endptr = NULL;
@@ -61,215 +56,155 @@ void PMergeMe::parseInput(char *av) {
 			throw std::runtime_error(str + " :Invalid input!");
 		this->_fj.push_back(static_cast<int>(num));
 	}
-	std::cout << GREEN << "Before: [ ";
-	for (size_t i = 0; i < _fj.size(); i++)
-		std::cout << _fj[i] << " ";
-	std::cout << "]" << RESET << std::endl;
+	checkDuplicates();
 }
 
-void	PMergeMe::insertPendIntoMain() {
+template <typename Container>
+void PMergeMe<Container>::checkDuplicates() {
+	Container copy = _fj;
+	std::sort(copy.begin(), copy.end());
+
+	for (size_t i = 1; i < copy.size(); ++i) {
+		if (copy[i] == copy[i - 1]) {
+			std::stringstream ss;
+			ss << copy[i];
+			throw std::runtime_error("Duplicate value found: " + ss.str());
+		}
+	}
+}
+
+template <typename Container>
+void	PMergeMe<Container>::insertPendIntoMain() {
 	if (_pendVec.size() == 0)
 		return ;
 	calculateJacobsthal();
+	setBlockSize();
 	defineBoundaries();
-	size_t n = std::pow(2, _recursiveLevels);
-	size_t	firstIndex = 0;
-	size_t	lastIndex = n / 2 - 1;
-	size_t	blockSize = n / 2;
-	size_t	numbersInserted = 0;
-	std::vector<int>	tempVec;
-	//size_t start = 0;
-	std::cout << "defining blocks: " << std::endl;
-	std::cout << "lastIndex: " << lastIndex << " blockSize: " << blockSize << std::endl;
-	for (size_t ctd = 0; ctd < _pendVec.size(); ctd += blockSize) {
-		std:: cout << (_mainVec[lastIndex + blockSize + ctd]) << " ";
-		tempVec.push_back(_mainVec[lastIndex + blockSize + ctd]);
-	}
-	std::cout << std::endl;
+	size_t	lastIndex =  _firstIndex; // which is actually the last index of the first block
 	while (!_pendVec.empty()) {
-    for (size_t i = 0; i < _jacobsthalVec.size(); i++) {
-		//std::cout << "jacobsthalVec[i]: " << _jacobsthalVec[i] << std::endl;
-        size_t j = _jacobsthalVec[i];
-		//define blocks
-
-        while (j > 0) {
-			// look for defined block and define index again
-			size_t pos = 0;
-			_curIndex = j - 1;
-			for (size_t k = 0; k < _mainVec.size(); k++) {
-				if (_mainVec[k] == tempVec[_curIndex]) {
-					pos = k;
-					std::cout << "numero aqui: " << _mainVec[pos] << std::endl;
-					break ;
-				}
+		for (size_t i = 0; i < _jacobsthalVec.size(); i++) {
+			size_t j = _jacobsthalVec[i];
+			while (j > 0) {
+				size_t curIndex = j - 1;
+				// look for defined block and define index again
+				checkBoundaryIndex(curIndex);
+				size_t start = curIndex * _blockSize;
+				size_t end = lastIndex + curIndex * _blockSize;
+				Container blockToInsert(_pendVec.begin() + start, _pendVec.begin() + end + 1);
+				binaryInsertBlock(blockToInsert);
+				_boundaryNumber.erase(_boundaryNumber.begin() + curIndex);
+				_pendVec.erase(_pendVec.begin() + start, _pendVec.begin() + end + 1);
+				j--;
 			}
-			
-            size_t start = firstIndex + _curIndex * blockSize;
-            size_t end   = lastIndex  + _curIndex * blockSize;
-			/* std::cout << start << " " << _pendVec[start] << std::endl;
-			std::cout << end << " " << _pendVec[end] << std::endl; */
-            // INSERT INTO MAIN
-			std::vector<int> blockToInsert(_pendVec.begin() + start, _pendVec.begin() + end + 1);
-			binaryInsertBlock(blockToInsert, blockSize, pos);
-			tempVec.erase(tempVec.begin() + _curIndex);
-            // ERASE FROM PEND
-            	_pendVec.erase(
-                _pendVec.begin() + start,
-                _pendVec.begin() + end + 1
-            );
-			//_matchingMainIndex.erase(_matchingMainIndex.begin());
-			numbersInserted++;
-            j--;
-        }
-		
-    }
+		}
 	}
-	tempVec.clear();
-	_fj.erase(_fj.begin(), _fj.begin() + _mainVec.size());
-	_fj.insert(_fj.begin(), _mainVec.begin(), _mainVec.end());
 }
 
-void PMergeMe::binaryInsertBlock(const std::vector<int>& block, size_t blockSize, size_t numbersInserted)
+/*This function is used to define the boundary in the beginning of the insertion.
+Since both vectors are going to change while this is being executed, I need to keep track of what is the number of the border*/
+template <typename Container>
+void	PMergeMe<Container>::defineBoundaries() {
+	for (size_t i = 0; i < _pendVec.size(); i+= _blockSize)
+		_boundaryNumber.push_back(_mainVec[_firstIndex + _blockSize + i]);
+}
+
+/*After defining the boundary in the previous function, now we need to search where is that number again in each iteration.*/
+template <typename Container>
+void	PMergeMe<Container>::checkBoundaryIndex(size_t curIndex) {
+	typename Container::iterator it = std::find(_mainVec.begin(), _mainVec.end(), _boundaryNumber[curIndex]);
+	_boundaryIndex = it - _mainVec.begin();
+}
+
+/*After calculating what is the pend vec block, this function inserts into main*/
+template <typename Container>
+void PMergeMe<Container>::binaryInsertBlock(const Container& block)
 {
-    int key = block[block.size() - 1]; // last element of block
-    size_t left = 0;
-	std::cout << "numbersInsert: " << numbersInserted << " _curIndex: " << _curIndex << std::endl;
-    size_t right = ((numbersInserted + 1) / blockSize); // number of blocks that are in main to compare
-	std::cout << "Current main vec: " << std::endl;
-	for (size_t i = 0; i < right * blockSize; i++)
-		std::cout << _mainVec[i] << " ";
-	std::cout << std::endl;
-	std::cout << "Total main vec: " << std::endl;
-	for (size_t i = 0; i < _mainVec.size(); i++)
-		std::cout << _mainVec[i] << " ";
-	std::cout << std::endl;
-    while (left < right)
-    {
+	int key = block[block.size() - 1]; // last element of block
+	size_t left = 0;
+	size_t right = ((_boundaryIndex + 1) / _blockSize); // number of blocks that are in main to compare
+	while (left < right)
+	{
 		comparisons++;
-        size_t mid = (left + right) / 2;
-        int midValue = _mainVec[mid * blockSize + blockSize - 1]; // last element of mid block
-		std::cout << "midValue: " << midValue << std::endl;
-        if (midValue < key)
-            left = mid + 1;
-        else
-            right = mid;
-		std::cout << "left: " << left << std::endl;
-    }
+		size_t mid = (left + right) / 2;
+		int midValue = _mainVec[mid * _blockSize + _blockSize - 1]; // last element of mid block
+		if (midValue < key)
+			left = mid + 1;
+		else
+			right = mid;
+	}
 
-    // Insert block at the correct position
-    _mainVec.insert(_mainVec.begin() + left * blockSize,
-                   block.begin(),
-                   block.end());
+	// Insert block at the correct position
+	_mainVec.insert(_mainVec.begin() + left * _blockSize, block.begin(), block.end());
 }
 
+/*Calculates the number and order of which pend block is going to be inserted into main.*/
+template <typename Container>
+void PMergeMe<Container>::calculateJacobsthal() {
+	_jacobsthalVec.clear();
 
-void	PMergeMe::defineBoundaries() {
-	_matchingMainIndex.clear();
 	size_t n = std::pow(2, _recursiveLevels);
 	size_t blockSize = n / 2;
-	int j = 1;
-	for (size_t i = 0; i < _pendVec.size(); i+= blockSize) {
-		//std::cout << "boundary number: " << _mainVec[j * blockSize] << std::endl;
-		_matchingMainIndex.push_back(j);
-		j++;
+	int numberOfBlocks = _pendVec.size() / blockSize;
+	if (numberOfBlocks == 0)
+		return;
+	Container jac;
+	jac.push_back(0);  // J0
+	jac.push_back(1);  // J1
+
+	while (jac.back() <= numberOfBlocks + 1) {
+		size_t next = jac[jac.size() - 1] + 2 * jac[jac.size() - 2];
+		jac.push_back(next);
+	}
+
+	// We start at J3 since B1 is already in main.
+	size_t i = 3;
+
+	while (numberOfBlocks > 0) {
+		int diff = jac[i] - jac[i - 1]; // The difference between each Jacobsthal, to know how many blocks are going to be inserted in that iteration
+		if (diff > numberOfBlocks)
+			diff = numberOfBlocks;
+		_jacobsthalVec.push_back(diff);
+		numberOfBlocks -= diff;
+		i++;
 	}
 }
 
-void PMergeMe::calculateJacobsthal() {
-    _jacobsthalVec.clear();
+/*In each iteration, I need to set all As and Bs into _mainVec and _pendVec.
+This is checked by 2 pairs at once, to check which one is the pend and which one is the main*/
+template <typename Container>
+void PMergeMe<Container>::setMainAndPend() {
+	setBlockSize();
+	size_t start = 0;
 
-	//std::cout << "aqui" << _pendVec.size() << " " << _recursiveLevels << std::endl;
-	size_t n = std::pow(2, _recursiveLevels);
-	size_t blockSize = n / 2;
-    size_t N = _pendVec.size() / blockSize;
-    if (N == 0)
-        return;
-
-    // Build Jacobsthal numbers up to something > N+1
-    std::vector<size_t> jac;
-    jac.push_back(0);  // J0
-    jac.push_back(1);  // J1
-
-    while (jac.back() <= N + 1) {
-        size_t next = jac[jac.size() - 1] + 2 * jac[jac.size() - 2];
-        jac.push_back(next);
-    }
-
-    // We start at J3 since B1 is already in main.
-    size_t j = 3;
-
-    size_t remaining = N;
-
-    while (remaining > 0) {
-		
-        size_t diff = jac[j] - jac[j - 1];
-        if (diff > remaining)
-            diff = remaining;
-
-        _jacobsthalVec.push_back(diff);
-
-        remaining -= diff;
-        j++;
-    }
+	while (_secondIndex < _fj.size()) {
+		if (start == 0) // to insert B1 Block only in the first iteration
+			_mainVec.insert(_mainVec.end(), _fj.begin() + start, _fj.begin() + start + _blockSize);
+		else // insert all Bs into pendVec
+			_pendVec.insert(_pendVec.end(), _fj.begin() + start, _fj.begin() + start + _blockSize);
+		// insert all As into mainVec
+		_mainVec.insert(_mainVec.end(), _fj.begin() + start + _blockSize, _fj.begin() + start + 2 * _blockSize);
+		// Move to next block pair
+		start += 2 * _blockSize;
+		_firstIndex += 2 * _blockSize;
+		_secondIndex += 2 * _blockSize;
+	}
+	if (_firstIndex < _fj.size()) { // if the number of pairs is odd, the last one is added to pendVec
+		size_t remaining = std::min(_blockSize, _fj.size() - start);
+		_pendVec.insert(_pendVec.end(), _fj.begin() + start, _fj.begin() + start + remaining);
+	}
 }
 
-
-void PMergeMe::setMainAndPend() {
-    size_t n = std::pow(2, _recursiveLevels);
-    _firstIndex = n / 2 - 1;
-    _secondIndex = n - 1;
-
-    size_t start = 0;
-    size_t blockSize = n / 2;
-
-    while (_secondIndex < _fj.size()) {
-        std::vector<int> firstBucket;
-        std::vector<int> secondBucket;
-        std::vector<int> thirdBucket;
-
-        // Fill the buckets
-        for (size_t i = 0; i < blockSize; ++i) {
-            if (start == 0)
-                firstBucket.push_back(_fj[start + i]);
-            else
-                thirdBucket.push_back(_fj[start + i]);
-
-            secondBucket.push_back(_fj[start + blockSize + i]);
-        }
-
-        // Insert buckets into main/pend
-        _mainVec.insert(_mainVec.end(), firstBucket.begin(), firstBucket.end());
-        _mainVec.insert(_mainVec.end(), secondBucket.begin(), secondBucket.end());
-        _pendVec.insert(_pendVec.end(), thirdBucket.begin(), thirdBucket.end());
-
-        start += n;
-        _firstIndex += n;
-        _secondIndex += n;
-    }
-
-    // If a leftover third bucket exists at the end
-    if (_firstIndex < _fj.size()) {
-        size_t remaining = std::min(blockSize, _fj.size() - start);
-        _pendVec.insert(_pendVec.end(), _fj.begin() + start, _fj.begin() + start + remaining);
-    }
-}
-
-
-std::vector<int> PMergeMe::fordJohnson() {
+template <typename Container>
+Container PMergeMe<Container>::fordJohnson() {
 	size_t n = std::pow(2, _recursiveLevels);
 	if (n > _fj.size())
 		return (_fj);
-	_firstIndex = n / 2 - 1;
-	_secondIndex = n - 1;
+	setBlockSize();
 	size_t start = 0;
-	size_t blockSize = n / 2;
 	while (_firstIndex < _fj.size() && _secondIndex < _fj.size()) {
 		comparisons++;
-		if (_fj[_firstIndex] > _fj[_secondIndex]) {
-			for (size_t i = 0; i < blockSize; ++i) {
-				std::swap(_fj[start + i], _fj[start + blockSize + i]);
-			}
-		}
+		if (_fj[_firstIndex] > _fj[_secondIndex])
+			std::swap_ranges(_fj.begin() + start, _fj.begin() + start + _blockSize, _fj.begin() + start + _blockSize);
 		start += n;
 		_firstIndex += n;
 		_secondIndex += n;
@@ -277,3 +212,22 @@ std::vector<int> PMergeMe::fordJohnson() {
 	_recursiveLevels++;
 	return (fordJohnson());
 }
+
+/*Besides setting the size of the block, it also sets the first and second index, which are actually the last index of the first pair
+and the last index of the second pair, since the comparisons are always made between these 2 numbers*/
+template <typename Container>
+void	PMergeMe<Container>::setBlockSize() {
+	size_t n = std::pow(2, _recursiveLevels);
+	_firstIndex = n / 2 - 1;
+	_secondIndex = n - 1;
+	_blockSize = n / 2;
+}
+
+template <typename Container>
+size_t	PMergeMe<Container>::getNumberOfElements() {
+	return (_fj.size());
+}
+
+/*Since all the functions are defined in the .cpp, these 2 declarations tell the compiler to create the 2 different classes using the template*/
+template class PMergeMe<std::vector<int> >;
+template class PMergeMe<std::deque<int> >;

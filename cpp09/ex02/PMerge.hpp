@@ -12,6 +12,8 @@
 # include <climits>
 # include <cerrno>
 # include <unistd.h>
+# include <sys/time.h>
+# include <iomanip>
 
 # define RED	"\033[31m"
 # define GREEN	"\033[32m"
@@ -25,30 +27,39 @@
 
 extern int	comparisons;
 
+template <typename Container>
 class PMergeMe {
 	private:
 		size_t				_firstIndex;
 		size_t				_secondIndex;
-		std::vector<int>	_mainVec;
-		std::vector<int>	_pendVec;
-		std::vector<int>	_fj;
-		std::vector<int>	_jacobsthalVec;
-		std::vector<int>	_matchingMainIndex;
+		size_t				_blockSize;
+		Container			_mainVec;
+		Container			_pendVec;
+		Container			_fj;
+		Container			_jacobsthalVec;
+		Container			_boundaryNumber;
 		int					_recursiveLevels;
-		size_t				_curIndex;
+		size_t				_boundaryIndex;
+
 	public:
 		PMergeMe();
-		PMergeMe(char *av);
 		~PMergeMe();
-		size_t				totalComparisons;
-		std::vector<int>	fordJohnson();
+
+		Container			fordJohnson();
+		void				setup();
 		void				parseInput(char *av);
+		void				checkDuplicates();
 		void				setMainAndPend();
 		void				insertPendIntoMain();
 		void				calculateJacobsthal();
 		void				defineBoundaries();
-		void				binaryInsertBlock(const std::vector<int>& block, size_t blockSize, size_t numbersInserted);
+		void				binaryInsertBlock(const Container& block);
+		void				setBlockSize();
+		void				checkBoundaryIndex(size_t curIndex);
+		void				printBefore();
+		void				printAfter();
 
+		size_t				getNumberOfElements();
 };
 
 #endif

@@ -3,9 +3,9 @@ import random
 import subprocess
 
 # Configuration
-num_numbers = 21      # number of numbers to generate
+num_numbers = 1000      # number of numbers to generate
 min_value = 0         # minimum value
-max_value = 1000       # maximum value
+max_value = 1000000    # maximum value
 executable = "./PmergeMe"  # path to your compiled executable
 
 # Generate random numbers
