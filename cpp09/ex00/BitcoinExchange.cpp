@@ -105,7 +105,7 @@ void	displayResult(std::map<std::string, std::string> data, std::string& key, st
 	if (!isInt(value) && !isFloat(value))
 			throw std::runtime_error("bad input => " + value);
 	ss2 >> num2;
-	std::cout << key << " => " << value << " = " << std::setprecision(2) << num * num2 << std::endl;
+	std::cout << key << " => " << value << " = " << std::fixed << std::setprecision(2) << num * num2 << std::endl;
 }
 
 std::map<std::string, std::string>	loadCsv(void) {
